@@ -107,10 +107,13 @@ int main(int argc, char * argv[])
 	
 	srand((unsigned int)time(0));
 	
+	int buf_len = 64*8*16;
+	
 	//short int meandr_value=32767;
         int phase = 1;
 	/* fill buffer with a sine wave */
-	for (i=0; i<BUF_SIZE; i++)
+//	for (i=0; i<BUF_SIZE; i++)
+	for (i=0; i< buf_len; i++)
 	{
 		if ( (i % 16) == 0) {
 //			if (rand() > RAND_MAX/2) {  // binary 1
@@ -139,7 +142,7 @@ int main(int argc, char * argv[])
 		buffer[i]=meandr_value;
 		*/
 	}
-	write_wav("test.wav", BUF_SIZE, buffer, S_RATE);
+	write_wav("test.wav", buf_len, buffer, S_RATE);
  
 	return 0;
 }
