@@ -85,9 +85,6 @@ void write_wav(char * filename, unsigned long num_samples, short int * data, int
 #define S_RATE  (48000)     // (44100)
 #define BUF_SIZE (S_RATE*10) /* 2 second buffer */
 #define BIT_RATE 1200
- 
-//int buffer[BUF_SIZE];
-short int buffer[BUF_SIZE];
 
 double d_random(double min, double max)
 {
@@ -131,6 +128,10 @@ int main(int argc, char * argv[])
 	
 	int buf_len = 128 * 8 * samples * 3;
 //	int buf_len = BUF_SIZE;
+	
+	 
+//      int buffer[BUF_SIZE];
+        short int buffer[buf_len];
 	
 	//short int meandr_value=32767;
         int phase = 1;
