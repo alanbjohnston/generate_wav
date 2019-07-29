@@ -16,6 +16,8 @@
  
  gcc -o make_wav make_wav.c -lm
  
+ ./make_wav
+ 
  aplay test.wav
  
  Playing WAVE 'test.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
