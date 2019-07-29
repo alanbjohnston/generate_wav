@@ -115,7 +115,7 @@ int main(int argc, char * argv[])
 		if ( (i % 16) == 0) {
 //			if (rand() > RAND_MAX/2) {  // binary 1
 //			if (b[i % (16 * 8)] & 1 << ((i % 16)-1)) {  // check byte x bit y value
-			if ((int)(i / (16 * 8))) & 1 << ((i - (int)(i / (16 * 8))) - 1))  { // check byte x bit y value
+			if (((int)(i / (16 * 8))) & 1 << ((i - (int)(i / (16 * 8))) - 1))  { // check byte x bit y value
 				phase *= -1;
 			}
 		}
