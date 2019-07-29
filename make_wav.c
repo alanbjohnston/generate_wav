@@ -133,9 +133,9 @@ int main(int argc, char * argv[])
 				phase *= -1;
 			}
 		}
-	//	buffer[i] = (int)(amplitude/2 * phase * sin((float)(2*M_PI*i*freq_Hz/S_RATE))); //10%amp
-		buffer[i] =(int)(amplitude/20 * sin((float)(2*M_PI*i*1*freq_Hz/S_RATE))); //5% amp
-		buffer[i] +=(int)(amplitude * sin((float)(2*M_PI*i*3*freq_Hz/S_RATE))); //100% amp
+		buffer[i] = (int)(amplitude/2 * phase * sin((float)(2*M_PI*i*freq_Hz/S_RATE))); //10%amp
+	//	buffer[i] =(int)(amplitude/20 * sin((float)(2*M_PI*i*1*freq_Hz/S_RATE))); //5% amp
+	//	buffer[i] +=(int)(amplitude * sin((float)(2*M_PI*i*3*freq_Hz/S_RATE))); //100% amp
 		
 		//buffer[i] +=(int)(amplitude * sin((float)(2*M_PI*i*freq_Hz/S_RATE))); //100% amp
 		
