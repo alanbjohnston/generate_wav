@@ -114,7 +114,8 @@ int main(int argc, char * argv[])
 	
 	int samples = S_RATE / BIT_RATE;
 	
-	int buf_len = 128 * 8 * samples;
+//	int buf_len = 128 * 8 * samples;
+	int buf_len = BUF_SIZE;
 	
 	//short int meandr_value=32767;
         int phase = 1;
@@ -126,7 +127,8 @@ int main(int argc, char * argv[])
 			int byte = ((int)(i / (samples * 8)));
 			int bit = (i - byte * samples * 8) / samples;
 //			printf ("b[%d] bit %d = %d \n", byte, bit, ((b[byte] & 1<<(bit-1)) > 0) );
-			if ((b[byte] & 1 << (bit - 1)) > 0)  {
+//			if ((b[byte] & 1 << (bit - 1)) > 0)  {
+			if (rand() > RAND_MAX/2)  {  // random data
 				
 				phase *= -1;
 			}
