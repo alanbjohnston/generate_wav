@@ -7,3 +7,15 @@
  * 
  * Edited by Dolin Sergey. dlinyj@gmail.com
  * April 11 12:58 2014
+ 
+ 
+ 
+ git clone  ...
+ 
+ cd generate_wav
+ 
+ gcc -o make_wav make_wav.c -lm
+ 
+ aplay test.wav
+ 
+ 
