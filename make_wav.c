@@ -98,7 +98,7 @@ int main(int argc, char * argv[])
 {
 	int i;
 	//float amplitude = 32000;
-	float amplitude = 20000; // 32767/(10%amp+5%amp+100%amp)
+	float amplitude = 32767; // 20000; // 32767/(10%amp+5%amp+100%amp)
 //	float freq_Hz = 100;
 	float freq_Hz = 3000;
 	
