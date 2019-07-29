@@ -109,7 +109,7 @@ int main(int argc, char * argv[])
 	for (i=0; i<BUF_SIZE; i++)
 	{
 		if ( (i % 16) == 0) {
-			if (srand() > RAND_MAX/2) {  // binary 1
+			if (rand() > RAND_MAX/2) {  // binary 1
 				bit *= -1;
 			}
 		}
