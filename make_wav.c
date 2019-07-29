@@ -101,19 +101,23 @@ int main(int argc, char * argv[])
 //	float freq_Hz = 100;
 	float freq_Hz = 3000;
 	
+	uint8_t b[64] = {0x0700000000100000007E0300000000E6010027D102E5400418E10400000000000000000000000000000000000003020000000000000000000000000000000000)
+	
 	srand((unsigned int)time(0));
 	
 	//short int meandr_value=32767;
-        int bit = 1;
+        int phase = 1;
 	/* fill buffer with a sine wave */
 	for (i=0; i<BUF_SIZE; i++)
 	{
 		if ( (i % 16) == 0) {
-			if (rand() > RAND_MAX/2) {  // binary 1
-				bit *= -1;
+//			if (rand() > RAND_MAX/2) {  // binary 1
+//			if (b[i % (16 * 8)] & 1 << ((i % 16)-1)) {  // check byte x bit y value
+			if ((int)(i / (16 * 8))) & 1 << ((i - (int)(i / (16 * 8))) - 1)  { // check byte x bit y value
+				phase *= -1;
 			}
 		}
-		buffer[i] = (int)(amplitude/2 * bit * sin((float)(2*M_PI*i*freq_Hz/S_RATE))); //10%amp
+		buffer[i] = (int)(amplitude/2 * phase * sin((float)(2*M_PI*i*freq_Hz/S_RATE))); //10%amp
 	//	buffer[i] +=(int)(amplitude/20 * sin((float)(2*M_PI*i*10*freq_Hz/S_RATE))); //5% amp
 	//	buffer[i] +=(int)(amplitude * sin((float)(2*M_PI*i*100*freq_Hz/S_RATE))); //100% amp
 		
