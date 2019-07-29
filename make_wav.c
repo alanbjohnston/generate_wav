@@ -125,7 +125,7 @@ int main(int argc, char * argv[])
 //			if (((int)(i / (16 * 8))) & 1 << ((i - (int)(i / (16 * 8))) - 1))  { // check byte x bit y value
 			int byte = ((int)(i / (16 * 8)));
 			int bit = (i - byte * 16 * 8) / 16;
-			printf ("b[%d] bit %d = %d \n", byte, bit, (b[byte] & 1<<(bit-1)));
+			printf ("b[%d] bit %d = %d \n", byte, bit, ((b[byte] & 1<<(bit-1)) > 0) );
 			{
 			
 				phase *= -1;
