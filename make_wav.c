@@ -98,19 +98,24 @@ int main(int argc, char * argv[])
 	int i;
 	//float amplitude = 32000;
 	float amplitude = 20000; // 32767/(10%amp+5%amp+100%amp)
-	float freq_Hz = 100;
+//	float freq_Hz = 100;
+	float freq_Hz = 3000;
 	
 	srand((unsigned int)time(0));
 	
 	//short int meandr_value=32767;
-
+        int bit = 1;
 	/* fill buffer with a sine wave */
 	for (i=0; i<BUF_SIZE; i++)
 	{
-		
-		buffer[i] = (int)(amplitude/10 * sin((float)(2*M_PI*i*freq_Hz/S_RATE))); //10%amp
-		buffer[i] +=(int)(amplitude/20 * sin((float)(2*M_PI*i*10*freq_Hz/S_RATE))); //5% amp
-		buffer[i] +=(int)(amplitude * sin((float)(2*M_PI*i*100*freq_Hz/S_RATE))); //100% amp
+		if ( (i % 16) == 0) {
+			if (srand() > RAND_MAX/2) {  // binary 1
+				bit *= -1;
+			}
+		}
+		buffer[i] = (int)(amplitude/2 * bit * sin((float)(2*M_PI*i*freq_Hz/S_RATE))); //10%amp
+	//	buffer[i] +=(int)(amplitude/20 * sin((float)(2*M_PI*i*10*freq_Hz/S_RATE))); //5% amp
+	//	buffer[i] +=(int)(amplitude * sin((float)(2*M_PI*i*100*freq_Hz/S_RATE))); //100% amp
 		
 		//buffer[i] +=(int)(amplitude * sin((float)(2*M_PI*i*freq_Hz/S_RATE))); //100% amp
 		
