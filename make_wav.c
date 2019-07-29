@@ -122,7 +122,12 @@ int main(int argc, char * argv[])
 		if ( (i % 16) == 0) {
 //			if (rand() > RAND_MAX/2) {  // binary 1
 //			if (b[i % (16 * 8)] & 1 << ((i % 16)-1)) {  // check byte x bit y value
-			if (((int)(i / (16 * 8))) & 1 << ((i - (int)(i / (16 * 8))) - 1))  { // check byte x bit y value
+//			if (((int)(i / (16 * 8))) & 1 << ((i - (int)(i / (16 * 8))) - 1))  { // check byte x bit y value
+			int byte = ((int)(i / (16 * 8)));
+			int bit = (i - (int)(i / (16 * 8)));
+			printf ("b[%d] bit %d = %d \n", byte, bit, (byte & 1<<(bit-1)));
+			{
+			
 				phase *= -1;
 			}
 		}
