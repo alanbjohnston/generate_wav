@@ -84,7 +84,7 @@ void write_wav(char * filename, unsigned long num_samples, short int * data, int
 
 #define S_RATE  (44100)
 define S_RATE  48000
-#define BUF_SIZE (S_RATE*10) /* 2 second buffer */
+define BUF_SIZE (S_RATE*10) /* 2 second buffer */
  
 //int buffer[BUF_SIZE];
 short int buffer[BUF_SIZE];
