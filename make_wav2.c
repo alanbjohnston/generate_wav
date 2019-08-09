@@ -25,6 +25,36 @@
 #define false 0
 #define true 1
 
+/**
+ * 
+ * 8b10b code is from FoxTelem by Burns Fisher WB1FJ
+ *
+ * https://github.com/ac2cz/FoxTelem/blob/master/src/decoder/Code8b10b.java  
+ *
+ * FOX 1 Telemetry Decoder
+ * @author chris.e.thompson g0kla/ac2cz
+ *
+ * Copyright (C) 2015 amsat.org
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General  License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General  License for more details.
+ *
+ * You should have received a copy of the GNU General  License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * 
+ * Static variables and methods to encode and decode 8b10b
+ * 
+ *
+ */
+
 static int getNextRd(int word, int flip);
 static int getRdSense10b(int word, int flip);
 static char decode(int word, int flip);
