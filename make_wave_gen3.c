@@ -1023,6 +1023,7 @@ int main(int argc, char * argv[])
              printf("%d rs_frame[%d][%d] = %x \n", ctr1, frame_rs, pos, b[k]);
     	}
     }	
+	    
     	printf("Parities ");
 		for (int m = 0; m < PARITY_LEN; m++) {
 		 	printf("%d ", parities[0][m]);
@@ -1032,10 +1033,16 @@ int main(int argc, char * argv[])
   	int ctr2 = 0;    
  	memset(data10,0,sizeof(data10));
  	memset(data8,0,sizeof(data8));
-    
+	    
+// change!! Try swapping order of sending	    
+/*    
     for (i = 0; i < RS_FRAME_LEN; i++) 
 	{
 		for (int j  = 0; j < RS_FRAMES ; j++)
+*/
+    for (int j  = 0; j < RS_FRAMES ; j++)
+	{
+	    for (i = 0; i < RS_FRAME_LEN; i++) 
 		{
 			if (!((i == (RS_FRAME_LEN - 1)) && (j == 2))) // skip last one for BPSK
 			{
@@ -1144,7 +1151,7 @@ int main(int argc, char * argv[])
 		}
 	 }   
 	}
-	write_wav("make_wav_gen2.wav", BUF_LEN, buffer, S_RATE);
+	write_wav("make_wav_gen3.wav", BUF_LEN, buffer, S_RATE);
  
 	return 0;
 }
