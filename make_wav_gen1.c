@@ -37,6 +37,9 @@ static int getRdSense10b(int word, int flip);
 static char decode(int word, int flip);
 static void printAll10bwords();
 static int encode(int word);
+static int twosToInt(int val,int len);
+static int encodeB(uint8_t *b, int index, int val);
+static int int encodeA(uint8_t *b, int index, int val);
 
 	 static  int NOT_FRAME = /* 0fa */ 0xfa & 0x3ff;
 	 static  int FRAME = /* 0fa */ ~0xfa & 0x3ff;
@@ -1244,4 +1247,25 @@ void write_to_buffer(int i, int symbol, int val)
 		return -99; // error state - we did not find the RD sense
 	}
 	
-//}
+int encodeA(uint8_t *b, int index, int val) {
+//    printf("Encoding A\n");
+    b[index] = (val & 0xff);
+    b[index + 1] = b[index + 1] | (val >> 8);
+    return 0;	
+}
+
+int encodeB(uint8_t *b, int index, int val) {
+//    printf("Encoding B\n");
+    b[index] = b[index]  |  (val << 4);
+    b[index + 1] = b[index + 1]  |  ((val >> 4 ) & 0xff);
+    return 0;	
+}
+
+int twosToInt(int val,int len) {   // Convert twos compliment to integer
+// from https://www.raspberrypi.org/forums/viewtopic.php?t=55815
+	
+      if(val & (1 << (len - 1)))
+         val = val - (1 << len);
+
+      return(val);
+}
