@@ -901,7 +901,7 @@ int main(int argc, char * argv[])
     unsigned char parities[RS_FRAMES][PARITY_LEN],inputByte;
 // 	memset(parities,0,sizeof(parities));
  	
-  int id = 1, frm_type = 0x01, TxTemp = 0, IHUcpuTemp = 0; 
+  int id = 2, reset_count = 100, uptime = 100, frm_type = 0x01, TxTemp = 0, IHUcpuTemp = 0; 
   int batt_a_v = 0, batt_b_v = 0, batt_c_v = 8.95 * 100, battCurr = 48.6 * 10;
   int posXv = 2.95 * 100, negXv = 0.45 * 100, posYv = 2.3 * 100, negYv = 0.68 * 100, posZv = 2.8 * 100, negZv = 0.78 * 100;
   int head_offset = 0; // 6;
@@ -929,19 +929,14 @@ int main(int argc, char * argv[])
 //		h[0] += 1;
      	// increment uptime
     	h[3] += 1;
-//    	h[5] += 1;
-//    	h[7] += 1;
-    	
-    	// battery voltage increment
-//    	b[1] += 1;
-//    	b[3] += 1;  // in DUV this increments battAtemp
+	// increment reset count    
+    	h[1] += 1;
 	 
 	 batt_c_v += 10;
 	 battCurr -= 10;
 	 encodeA(b, 3 + head_offset, batt_c_v);
  	 encodeA(b, 9 + head_offset, battCurr);
        
-    	printf("Frame: %d Id: %d Uptime: %x Battery: %x \n", frames, h[0], h[3], b[3]);
 
 	int ctr1 = 0;
 	int frame_rs = 0;	
