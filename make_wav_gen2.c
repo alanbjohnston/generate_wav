@@ -989,6 +989,13 @@ int main(int argc, char * argv[])
    	printf("h[1] %x\n", h[1]);
 	h[2] = (h[2] & 0xf8) | ((reset_count >> 13) & 0x07); 	    
 	printf("h[2] %x\n", h[2]);
+	
+	uptime += 1;
+	h[2] = (h[2] & 0x0e) | ((uptime & 0x1f) << 3);
+  	printf("h[2] %x\n", h[2]);
+  	h[3] = (uptime >> 5) & 0xff;
+  	h[4] = (uptime >> 13) & 0xff;
+  	h[5] = (h[5] & 0xf0) | ((uptime >> 21) & 0x0f);
 	    
 	 batt_c_v += 10;
 	 battCurr -= 10;
