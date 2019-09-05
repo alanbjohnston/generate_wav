@@ -970,18 +970,9 @@ int main(int argc, char * argv[])
     for (int frames = 0; frames < FRAME_CNT; frames++) 
     {
     	memset(rs_frame,0,sizeof(rs_frame));
- 		memset(parities,0,sizeof(parities));
+ 	memset(parities,0,sizeof(parities));
 
-		// increment id
-//		h[0] += 1;
-     	// increment uptime
-    	//h[3] += 1;
-	// increment reset count    
-    	//h[1] += 1;
-	 reset_count += 1;
-//	 h[0] = h[0] | ((reset_count & 0xf8) << 3);
-//  	 h[1] = (reset_count >> 5) & 0xff;
-//  	 h[2] = h[2] | ((reset_count >> 13) & 0x07);
+	reset_count += 1;
 
   	h[0] = (h[0] & 0x07)| ((reset_count & 0x1f) << 3);
   	printf("h[0] %x\n", h[0]);
@@ -999,11 +990,11 @@ int main(int argc, char * argv[])
 	    
 	 batt_c_v += 10;
 	 battCurr -= 10;
-//	 encodeA(b, 3 + head_offset, batt_c_v);
-// 	 encodeA(b, 9 + head_offset, battCurr);
+	 encodeA(b, 3 + head_offset, batt_c_v);
+ 	 encodeA(b, 9 + head_offset, battCurr);
        
-	int ctr1 = 0;
-/*	int frame_rs = 0;	
+/*	int ctr1 = 0;
+	int frame_rs = 0;	
 	for (int i = 0; i < HEADER_LEN; i++)  // header
 	{
          rs_frame[frame_rs][ctr1++] = h[i];
@@ -1025,6 +1016,7 @@ int main(int argc, char * argv[])
     	}
     }	
 */
+	int ctr1 = 0;
 	int ctr3 = 0;
         for (int j  = 0; j < RS_FRAMES ; j++)
 	{
@@ -1035,8 +1027,9 @@ int main(int argc, char * argv[])
 				if (ctr1 < HEADER_LEN)
 				{
              				rs_frame[j][i] = h[ctr1];
-		     			update_rs(parities[j], h[ctr1++]);
-            				printf("header %d rs_frame[%d][%d] = %x \n", ctr1 - 1, j, i, h[ctr1 - 1]);
+		     			update_rs(parities[j], h[ctr1]);
+            				printf("header %d rs_frame[%d][%d] = %x \n", ctr1 - 1, j, i, h[ctr1]);
+					ctr1++;
 				}
 				else
 				{
