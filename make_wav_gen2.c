@@ -911,15 +911,16 @@ int main(int argc, char * argv[])
 		        0x00,0x00,0x00,0x03,0x02,0x00,0x00,0x00,0x00,0x00,0x00,
 		        0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
 		         0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
-		         
+/*		         
 	short int h[HEADER_LEN] = {0x05,0x00,0x00,0x00,0x00,0x10,0x00,0x00};	
-/**/	
+*/	
 /*
 	short int b[DATA_LEN];
 	memset(b, 0, sizeof(b));
+*/
 	short int h[HEADER_LEN];
 	memset(h, 0, sizeof(h));
-*/	
+	
 	short int b10[DATA_LEN], h10[HEADER_LEN];
 //	short int rs_frame[3][RS_FRAME_LEN];
 	short int rs_frame[RS_FRAMES][223];
@@ -928,7 +929,7 @@ int main(int argc, char * argv[])
     unsigned char parities[RS_FRAMES][PARITY_LEN],inputByte;
 // 	memset(parities,0,sizeof(parities));
   long int uptime;
-  int id = 2, frm_type = 0x01, TxTemp = 0, IHUcpuTemp = 0; 
+  int id = 5, frm_type = 0x01, TxTemp = 0, IHUcpuTemp = 0; 
   int batt_a_v = 0, batt_b_v = 0, batt_c_v = 8.95 * 100, battCurr = 48.6 * 10;
   int posXv = 2.95 * 100, negXv = 0.45 * 100, posYv = 2.3 * 100, negYv = 0.68 * 100, posZv = 2.8 * 100, negZv = 0.78 * 100;
   int head_offset = 0; // 6;
@@ -938,7 +939,7 @@ int main(int argc, char * argv[])
 //  printf("%ju seconds\n", (uintmax_t)time_epoch);
 //  printf("%ld uptime\n", uptime);
 
-/*	
+	
   h[0] = h[0] | (id & 0x07);  // 3 bits
   h[0] = h[0] | ((reset_count & 0x1f) << 3);
   h[1] = (reset_count >> 5) & 0xff;
@@ -948,7 +949,7 @@ int main(int argc, char * argv[])
   h[4] = (uptime >> 13) & 0xff;
   h[5] = h[5] | ((uptime >> 21) & 0x0f);
   h[5] = h[5] | (frm_type << 4);  
- */ 
+  
 /*
   encodeA(b, 0 + head_offset, batt_a_v);
   encodeB(b, 1 + head_offset, batt_b_v);
