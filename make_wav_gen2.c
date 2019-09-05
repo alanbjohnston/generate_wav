@@ -946,7 +946,7 @@ int main(int argc, char * argv[])
   h[4] = (uptime >> 13) & 0xff;
   h[5] = h[5] | ((uptime >> 21) & 0x0f);
   h[5] = h[5] | (frm_type << 4);  
-
+/*
   encodeA(b, 0 + head_offset, batt_a_v);
   encodeB(b, 1 + head_offset, batt_b_v);
   encodeA(b, 3 + head_offset, batt_c_v);
@@ -957,7 +957,7 @@ int main(int argc, char * argv[])
   encodeB(b, 16 + head_offset,negYv);	
   encodeA(b, 18 + head_offset,posZv);	
   encodeB(b, 19 + head_offset,negZv);		
-
+*/
     for (int frames = 0; frames < FRAME_CNT; frames++) 
     {
     	memset(rs_frame,0,sizeof(rs_frame));
@@ -976,8 +976,8 @@ int main(int argc, char * argv[])
  
 	 batt_c_v += 10;
 	 battCurr -= 10;
-	 encodeA(b, 3 + head_offset, batt_c_v);
- 	 encodeA(b, 9 + head_offset, battCurr);
+//	 encodeA(b, 3 + head_offset, batt_c_v);
+// 	 encodeA(b, 9 + head_offset, battCurr);
        
 	int ctr1 = 0;
 	int frame_rs = 0;	
