@@ -912,13 +912,13 @@ int main(int argc, char * argv[])
 //  printf("%ld uptime\n", uptime);
 	
   h[0] = h[0] | (id & 0x07);  // 3 bits
-  h[0] = h[0] | (reset_count & 0xf8) << 3;
+  h[0] = h[0] | ((reset_count & 0xf8) << 3);
   h[1] = (reset_count >> 5) & 0xff;
-  h[2] = h[2] | (reset_count >> 13) & 0x07;
-  h[2] = h[2] | (uptime & 0xf8) >> 3;
+  h[2] = h[2] | ((reset_count >> 13) & 0x07);
+  h[2] = h[2] | ((uptime & 0xf8) >> 3);
   h[3] = (uptime >> 5) & 0xff;
   h[4] = (uptime >> 13) & 0xff;
-  h[5] = h[5] | (uptime >> 21) &&0x0f;
+  h[5] = h[5] | ((uptime >> 21) &&0x0f);
   h[5] = h[5] | (frm_type << 4);  
 
   encodeA(b, 0 + head_offset, batt_a_v);
