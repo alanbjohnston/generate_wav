@@ -896,6 +896,24 @@ int main(int argc, char * argv[])
     unsigned char parities[RS_FRAMES][PARITY_LEN],inputByte;
 // 	memset(parities,0,sizeof(parities));
  	
+  int id = 1, frm_type = 0x01, TxTemp = 0, IHUcpuTemp = 0; 
+  int batt_a_v = 0, batt_b_v = 0, batt_c_v = 8.95 * 100, battCurr = 48.6 * 10;
+  int posXv = 2.95 * 100, negXv = 0.45 * 100, posYv = 2.3 * 100, negYv = 0.68 * 100, posZv = 2.8 * 100, negZv = 0.78 * 100;
+  int head_offset = 6;
+	
+  b[0] = b[0] | (id & 0x07);  // 3 bits
+  b[5] = b[5] | (frm_type << 4);  
+
+  encodeA(b, 0 + head_offset, batt_a_v);
+  encodeB(b, 1 + head_offset, batt_b_v);
+  encodeA(b, 3 + head_offset, batt_c_v);
+  encodeA(b, 9 + head_offset, battCurr);
+  encodeA(b, 12 + head_offset,posXv);	
+  encodeB(b, 13 + head_offset,negXv);	
+  encodeA(b, 15 + head_offset,posYv);	
+  encodeB(b, 16 + head_offset,negYv);	
+  encodeA(b, 18 + head_offset,posZv);	
+  encodeB(b, 19 + head_offset,negZv);		
 
     for (int frames = 0; frames < FRAME_CNT; frames++) 
     {
@@ -911,7 +929,13 @@ int main(int argc, char * argv[])
     	
     	// battery voltage increment
 //    	b[1] += 1;
-    	b[3] += 1;  // in DUV this increments battAtemp
+//    	b[3] += 1;  // in DUV this increments battAtemp
+	 
+	 batt_c_v) += 10;
+	 battCurr -= 10;
+	 encodeA(b, 3 + head_offset, batt_c_v);
+ 	 encodeA(b, 9 + head_offset, battCurr);
+       
     	printf("Frame: %d Id: %d Uptime: %x Battery: %x \n", frames, h[0], h[3], b[3]);
 
 	int ctr1 = 0;
