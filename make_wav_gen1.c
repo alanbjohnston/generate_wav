@@ -931,7 +931,7 @@ int main(int argc, char * argv[])
 //    	b[1] += 1;
 //    	b[3] += 1;  // in DUV this increments battAtemp
 	 
-	 batt_c_v) += 10;
+	 batt_c_v += 10;
 	 battCurr -= 10;
 	 encodeA(b, 3 + head_offset, batt_c_v);
  	 encodeA(b, 9 + head_offset, battCurr);
