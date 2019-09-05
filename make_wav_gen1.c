@@ -907,7 +907,7 @@ int main(int argc, char * argv[])
   int head_offset = 0; // 6;
 	
   time_t time_epoch = time(NULL);
-  uptime = 1567650254 - time_epoch;
+  uptime = time_epoch - 1567650254;
   printf("%ju seconds\n", (uintmax_t)time_epoch);
   printf("%ld uptime\n", uptime);
   return(0);
