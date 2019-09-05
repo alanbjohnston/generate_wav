@@ -907,7 +907,8 @@ int main(int argc, char * argv[])
   int head_offset = 0; // 6;
 	
   time_t time_epoch = time(NULL);
-  printf("%ju seconds\n");
+//  uptime = 4294316509 - time_epoch;
+  printf("%ju seconds\n", uptime);
   return(0);
 	
   h[0] = h[0] | (id & 0x07);  // 3 bits
