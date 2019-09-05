@@ -880,7 +880,7 @@ int main(int argc, char * argv[])
         config_file = fopen("sim.cfg","w");
 	fprintf(config_file, "%s %d", "KU2Y", 100);
 	fclose(config_file);
-	onfig_file = fopen("sim.cfg","r"); 
+	config_file = fopen("sim.cfg","r"); 
     } 
   
     char* cfg_buf[100]; 
