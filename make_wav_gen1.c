@@ -885,7 +885,16 @@ int main(int argc, char * argv[])
   
     char* cfg_buf[100]; 
     fscanf(config_file, "%s %d", call, &reset_count);
+    fclose(config_file);
     printf("%s %d\n", call, reset_count); 
+	
+    reset_count = (reset_count + 1) % 0xffff;
+	
+    config_file = fopen("sim.cfg","w");
+    fprintf(config_file, "%s %d", call, reset_count);
+    fclose(config_file);
+    config_file = fopen("sim.cfg","r"); 
+	
 	
 	int i;
 	//float amplitude = 32000;
