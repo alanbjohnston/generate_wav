@@ -908,7 +908,7 @@ int main(int argc, char * argv[])
 	
   time_t time_epoch = time(NULL);
 //  uptime = 4294316509 - time_epoch;
-  printf("%ju seconds\n", (uintmax_t)uptime);
+  printf("%ju seconds\n", (uintmax_t)time_epoch);
   return(0);
 	
   h[0] = h[0] | (id & 0x07);  // 3 bits
