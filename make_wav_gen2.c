@@ -903,7 +903,7 @@ int main(int argc, char * argv[])
 	long int sync = SYNC_WORD;
 
 	smaller = S_RATE/(2 * freq_Hz);
-/*	
+/**/	
 	short int b[DATA_LEN] = {0x00,0x7E,0x03,
 				0x00,0x00,0x00,0x00,0xE6,0x01,0x00,0x27,0xD1,0x02,
 		        0xE5,0x40,0x04,0x18,0xE1,0x04,0x00,0x00,0x00,0x00,0x00,0x00,
@@ -913,12 +913,13 @@ int main(int argc, char * argv[])
 		         0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
 		         
 	short int h[HEADER_LEN] = {0x05,0x00,0x00,0x00,0x00,0x10,0x00,0x00};	
-*/	
+/**/	
+/*
 	short int b[DATA_LEN];
 	memset(b, 0, sizeof(b));
 	short int h[HEADER_LEN];
 	memset(h, 0, sizeof(h));
-	
+*/	
 	short int b10[DATA_LEN], h10[HEADER_LEN];
 //	short int rs_frame[3][RS_FRAME_LEN];
 	short int rs_frame[RS_FRAMES][223];
@@ -936,7 +937,8 @@ int main(int argc, char * argv[])
   uptime = time_epoch - 1567650254;
 //  printf("%ju seconds\n", (uintmax_t)time_epoch);
 //  printf("%ld uptime\n", uptime);
-	
+
+/*	
   h[0] = h[0] | (id & 0x07);  // 3 bits
   h[0] = h[0] | ((reset_count & 0x1f) << 3);
   h[1] = (reset_count >> 5) & 0xff;
@@ -946,6 +948,7 @@ int main(int argc, char * argv[])
   h[4] = (uptime >> 13) & 0xff;
   h[5] = h[5] | ((uptime >> 21) & 0x0f);
   h[5] = h[5] | (frm_type << 4);  
+ */ 
 /*
   encodeA(b, 0 + head_offset, batt_a_v);
   encodeB(b, 1 + head_offset, batt_b_v);
