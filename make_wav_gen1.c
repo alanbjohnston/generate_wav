@@ -870,6 +870,23 @@ short int data10[8 + RS_FRAMES * (RS_FRAME_LEN + PARITY_LEN)];
 short int data8[8 + RS_FRAMES * (RS_FRAME_LEN + PARITY_LEN)]; 
 int main(int argc, char * argv[])
 {
+    int reset_count;
+    char call[5];
+	
+    FILE* config_file = fopen("sim.cfg","r"); 
+    if (config_file == NULL) 
+    { 
+        printf("Creating config file."); 
+        config_file = fopen("sim.cfg","w");
+	fprintf(config_file, "%s %d", "KU2Y", 100);
+	fclose(config_file);
+	onfig_file = fopen("sim.cfg","r"); 
+    } 
+  
+    char* cfg_buf[100]; 
+    fscanf(config_file, "%s %d", call, &reset_count);
+    printf("%s %d\n", call, reset_count); 
+	
 	int i;
 	//float amplitude = 32000;
 //	#define SYNC_LEN 4
@@ -901,7 +918,7 @@ int main(int argc, char * argv[])
     unsigned char parities[RS_FRAMES][PARITY_LEN],inputByte;
 // 	memset(parities,0,sizeof(parities));
   long int uptime;
-  int id = 2, reset_count = 100, frm_type = 0x01, TxTemp = 0, IHUcpuTemp = 0; 
+  int id = 2, frm_type = 0x01, TxTemp = 0, IHUcpuTemp = 0; 
   int batt_a_v = 0, batt_b_v = 0, batt_c_v = 8.95 * 100, battCurr = 48.6 * 10;
   int posXv = 2.95 * 100, negXv = 0.45 * 100, posYv = 2.3 * 100, negYv = 0.68 * 100, posZv = 2.8 * 100, negZv = 0.78 * 100;
   int head_offset = 0; // 6;
