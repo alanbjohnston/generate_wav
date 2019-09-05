@@ -941,7 +941,9 @@ int main(int argc, char * argv[])
 
 	
   h[0] = h[0] | (id & 0x07);  // 3 bits
+  printf("h[0] %x\n", h[0]);
   h[0] = h[0] | ((reset_count & 0x1f) << 3);
+  printf("h[0] %x\n", h[0]);
   h[1] = (reset_count >> 5) & 0xff;
   h[2] = h[2] | ((reset_count >> 13) & 0x07);
   h[2] = h[2] | ((uptime & 0x1f) << 3);
@@ -979,6 +981,7 @@ int main(int argc, char * argv[])
 //  	 h[2] = h[2] | ((reset_count >> 13) & 0x07);
 
  	h[0] = h[0] | ((reset_count & 0x1f) << 3);
+	printf("h[0] %x\n", h[0]);
   	h[1] = (reset_count >> 5) & 0xff;
   	h[2] = h[2] | ((reset_count >> 13) & 0x07);
  	    
