@@ -818,7 +818,7 @@ void write_wav(char * filename, unsigned long num_samples, short int * data, int
 
 #define S_RATE  (48000)     // (44100)
 #define BUF_SIZE (S_RATE*10) /* 2 second buffer */
-
+/*
 // BPSK Settings
 #define BIT_RATE	1200 // 200 for DUV
 #define DUV	0 // 1 for DUV
@@ -829,7 +829,7 @@ void write_wav(char * filename, unsigned long num_samples, short int * data, int
 #define SYNC_BITS 31  // 10 for DUV
 #define SYNC_WORD 0b1000111110011010010000101011101 // 0b0011111010 for DUV
 #define HEADER_LEN 8  // 6 for DUV
-/*
+*/
 // DUV Settings
 #define BIT_RATE 200 
 #define DUV	1
@@ -840,7 +840,7 @@ void write_wav(char * filename, unsigned long num_samples, short int * data, int
 #define DATA_LEN 58
 #define SYNC_BITS 10
 #define SYNC_WORD 0b0011111010
-*/
+
 
 double d_random(double min, double max)
 {
