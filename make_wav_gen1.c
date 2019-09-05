@@ -39,7 +39,7 @@ static void printAll10bwords();
 static int encode(int word);
 static int twosToInt(int val,int len);
 static int encodeB(uint8_t *b, int index, int val);
-static int int encodeA(uint8_t *b, int index, int val);
+static int encodeA(uint8_t *b, int index, int val);
 
 	 static  int NOT_FRAME = /* 0fa */ 0xfa & 0x3ff;
 	 static  int FRAME = /* 0fa */ ~0xfa & 0x3ff;
