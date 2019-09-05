@@ -899,10 +899,10 @@ int main(int argc, char * argv[])
   int id = 1, frm_type = 0x01, TxTemp = 0, IHUcpuTemp = 0; 
   int batt_a_v = 0, batt_b_v = 0, batt_c_v = 8.95 * 100, battCurr = 48.6 * 10;
   int posXv = 2.95 * 100, negXv = 0.45 * 100, posYv = 2.3 * 100, negYv = 0.68 * 100, posZv = 2.8 * 100, negZv = 0.78 * 100;
-  int head_offset = 6;
+  int head_offset = 0; // 6;
 	
-  b[0] = b[0] | (id & 0x07);  // 3 bits
-  b[5] = b[5] | (frm_type << 4);  
+  h[0] = h[0] | (id & 0x07);  // 3 bits
+  h[5] = h[5] | (frm_type << 4);  
 
   encodeA(b, 0 + head_offset, batt_a_v);
   encodeB(b, 1 + head_offset, batt_b_v);
