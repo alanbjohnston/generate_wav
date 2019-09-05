@@ -818,7 +818,7 @@ void write_wav(char * filename, unsigned long num_samples, short int * data, int
 
 #define S_RATE  (48000)     // (44100)
 #define BUF_SIZE (S_RATE*10) /* 2 second buffer */
-/*
+
 // BPSK Settings
 #define BIT_RATE	1200 // 200 for DUV
 #define DUV	0 // 1 for DUV
@@ -829,7 +829,7 @@ void write_wav(char * filename, unsigned long num_samples, short int * data, int
 #define SYNC_BITS 31  // 10 for DUV
 #define SYNC_WORD 0b1000111110011010010000101011101 // 0b0011111010 for DUV
 #define HEADER_LEN 8  // 6 for DUV
-*/
+/*
 // DUV Settings
 #define BIT_RATE 200 
 #define DUV	1
@@ -840,7 +840,7 @@ void write_wav(char * filename, unsigned long num_samples, short int * data, int
 #define DATA_LEN 58
 #define SYNC_BITS 10
 #define SYNC_WORD 0b0011111010
-
+*/
 
 double d_random(double min, double max)
 {
@@ -1074,9 +1074,10 @@ int main(int argc, char * argv[])
 		{
 			if (!((i == (RS_FRAME_LEN - 1)) && (j == 2))) // skip last one for BPSK
 			{
-				data8[ctr2++] = rs_frame[j][i];
+				data8[ctr2 % DATA_LEN] = rs_frame[j][i];
 				printf ("data8[%d] = rs_frame[%d][%d] = %x \n",
-					ctr2 - 1, j, i, rs_frame[j][i]);
+					ctr2, j, i, rs_frame[j][i]);
+				ctr2++;
 			}
 		}	
 	}    
@@ -1087,10 +1088,10 @@ int main(int argc, char * argv[])
  
     for (i = 0; i < DATA_LEN * PAYLOADS + HEADER_LEN; i++) // 476 for BPSK
 	{
-				data10[ctr2] = (Encode_8b10b[rd][((int)data8[ctr2])] & 0x3ff);
-				nrd = (Encode_8b10b[rd][((int)data8[ctr2])] >> 10) & 1;
+				data10[ctr2 % DATA_LEN] = (Encode_8b10b[rd][((int)data8[ctr2 % DATA_LEN])] & 0x3ff);
+				nrd = (Encode_8b10b[rd][((int)data8[ctr2 % DATA_LEN])] >> 10) & 1;
 				printf ("data10[%d] = encoded data8[%d] = %x \n",
-				 	ctr2, ctr2, data10[ctr2]); 
+				 	ctr2, ctr2, data10[ctr2 % DATA_LEN]); 
 
 				rd = nrd; // ^ nrd;
 				ctr2++;
@@ -1100,11 +1101,11 @@ int main(int argc, char * argv[])
 	{
 		for (int j  = 0; j < RS_FRAMES; j++)
 		{
-			data10[ctr2++] = (Encode_8b10b[rd][((int)parities[j][i])] & 0x3ff);
+			data10[ctr2 %] = (Encode_8b10b[rd][((int)parities[j][i])] & 0x3ff);
 			nrd = (Encode_8b10b[rd][((int)parities[j][i])] >> 10) & 1;
 			printf ("data10[%d] = encoded parities[%d][%d] = %x \n",
-				 ctr2 - 1, j, i, data10[ctr2 - 1]); 
-
+				 ctr2, j, i, data10[ctr2 - 1]); 
+			ctr2++;
 			rd = nrd; 
 		}	
 	}
