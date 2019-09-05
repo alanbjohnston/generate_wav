@@ -900,15 +900,16 @@ int main(int argc, char * argv[])
 //    uint8_t parities[3][PARITY_LEN],inputByte;
     unsigned char parities[RS_FRAMES][PARITY_LEN],inputByte;
 // 	memset(parities,0,sizeof(parities));
- 	
-  int id = 2, reset_count = 100, uptime = 100, frm_type = 0x01, TxTemp = 0, IHUcpuTemp = 0; 
+  int32_t uptime;
+  int id = 2, reset_count = 100, frm_type = 0x01, TxTemp = 0, IHUcpuTemp = 0; 
   int batt_a_v = 0, batt_b_v = 0, batt_c_v = 8.95 * 100, battCurr = 48.6 * 10;
   int posXv = 2.95 * 100, negXv = 0.45 * 100, posYv = 2.3 * 100, negYv = 0.68 * 100, posZv = 2.8 * 100, negZv = 0.78 * 100;
   int head_offset = 0; // 6;
 	
   time_t time_epoch = time(NULL);
-//  uptime = 4294316509 - time_epoch;
+  uptime = 1567650254 - time_epoch;
   printf("%ju seconds\n", (uintmax_t)time_epoch);
+  printf("%d uptime\n", uptime);
   return(0);
 	
   h[0] = h[0] | (id & 0x07);  // 3 bits
