@@ -1003,7 +1003,7 @@ int main(int argc, char * argv[])
 // 	 encodeA(b, 9 + head_offset, battCurr);
        
 	int ctr1 = 0;
-	int frame_rs = 0;	
+/*	int frame_rs = 0;	
 	for (int i = 0; i < HEADER_LEN; i++)  // header
 	{
          rs_frame[frame_rs][ctr1++] = h[i];
@@ -1012,6 +1012,7 @@ int main(int argc, char * argv[])
     }   
        
     int pos = 0;
+	    
     for (int j = 0; j < PAYLOADS; j++)   // six payloads in a row for BPSK
     {   	
     	for (int k = 0; k < DATA_LEN; k++)
@@ -1023,6 +1024,35 @@ int main(int argc, char * argv[])
              printf("%d rs_frame[%d][%d] = %x \n", ctr1, frame_rs, pos, b[k]);
     	}
     }	
+*/
+        for (int j  = 0; j < RS_FRAMES ; j++)
+	{
+	    for (i = 0; i < RS_FRAME_LEN; i++) 
+		{
+			if (!((i == (RS_FRAME_LEN - 1)) && (j == 2))) // skip last one for BPSK
+			{
+				if (ctr1 < HEADER_LEN)
+				{
+             				rs_frame[j][i] = h[ctr1];
+		     			update_rs(parities[j], h[ctr1++]);
+            				printf("header %d rs_frame[%d][%d] = %x \n", ctr1 - 1, j, i, h[ctr1 - 1]);
+				}
+				else
+				{
+             				rs_frame[j][i] = b[ctr1 - HEADER_LEN];
+		     			update_rs(parities[j], b[ctr1++ - HEADER_LEN]);
+            				printf("%d rs_frame[%d][%d] = %x \n", ctr1 - 1, j, i, b[ctr1 - HEADER_LEN - 1]);
+				}
+				
+				
+//				data8[ctr2++] = rs_frame[j][i];
+//				printf ("data8[%d] = rs_frame[%d][%d] = %x \n",
+//					ctr2 - 1, j, i, rs_frame[j][i]);
+			}
+		}	
+	}    
+	    
+	    
 	    
     	printf("Parities ");
 		for (int m = 0; m < PARITY_LEN; m++) {
@@ -1034,13 +1064,9 @@ int main(int argc, char * argv[])
  	memset(data10,0,sizeof(data10));
  	memset(data8,0,sizeof(data8));
 	    
-// change!! Try swapping order of sending	    
-/*    
-    for (i = 0; i < RS_FRAME_LEN; i++) 
-	{
-		for (int j  = 0; j < RS_FRAMES ; j++)
-*/
-    for (int j  = 0; j < RS_FRAMES ; j++)
+// correct order of sending	    
+
+        for (int j  = 0; j < RS_FRAMES ; j++)
 	{
 	    for (i = 0; i < RS_FRAME_LEN; i++) 
 		{
@@ -1151,7 +1177,7 @@ int main(int argc, char * argv[])
 		}
 	 }   
 	}
-	write_wav("make_wav_gen3.wav", BUF_LEN, buffer, S_RATE);
+	write_wav("make_wav_gen4.wav", BUF_LEN, buffer, S_RATE);
  
 	return 0;
 }
