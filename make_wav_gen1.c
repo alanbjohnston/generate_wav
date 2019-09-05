@@ -906,6 +906,10 @@ int main(int argc, char * argv[])
   int posXv = 2.95 * 100, negXv = 0.45 * 100, posYv = 2.3 * 100, negYv = 0.68 * 100, posZv = 2.8 * 100, negZv = 0.78 * 100;
   int head_offset = 0; // 6;
 	
+  time_t time_epoch = time(NULL);
+  printf("%ju seconds\n");
+  return(0);
+	
   h[0] = h[0] | (id & 0x07);  // 3 bits
   h[5] = h[5] | (frm_type << 4);  
 
