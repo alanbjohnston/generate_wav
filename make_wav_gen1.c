@@ -940,16 +940,19 @@ int main(int argc, char * argv[])
 		// increment id
 //		h[0] += 1;
      	// increment uptime
-    	h[3] += 1;
+    	//h[3] += 1;
 	// increment reset count    
-    	h[1] += 1;
-	 
+    	//h[1] += 1;
+	 reset_count += 1;
+	 h[0] = h[0] | ((reset_count & 0xf8) << 3);
+  	 h[1] = (reset_count >> 5) & 0xff;
+  	 h[2] = h[2] | ((reset_count >> 13) & 0x07);
+ 
 	 batt_c_v += 10;
 	 battCurr -= 10;
 	 encodeA(b, 3 + head_offset, batt_c_v);
  	 encodeA(b, 9 + head_offset, battCurr);
        
-
 	int ctr1 = 0;
 	int frame_rs = 0;	
 	for (int i = 0; i < HEADER_LEN; i++)  // header
