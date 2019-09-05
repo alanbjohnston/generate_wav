@@ -1025,6 +1025,7 @@ int main(int argc, char * argv[])
     	}
     }	
 */
+	int ctr3 = 0;
         for (int j  = 0; j < RS_FRAMES ; j++)
 	{
 	    for (i = 0; i < RS_FRAME_LEN; i++) 
@@ -1039,9 +1040,10 @@ int main(int argc, char * argv[])
 				}
 				else
 				{
-             				rs_frame[j][i] = b[ctr1 - HEADER_LEN];
-		     			update_rs(parities[j], b[ctr1++ - HEADER_LEN]);
-            				printf("%d rs_frame[%d][%d] = %x \n", ctr1 - 1, j, i, b[ctr1 - HEADER_LEN - 1]);
+             				rs_frame[j][i] = b[ctr3 % DATA_LEN];
+		     			update_rs(parities[j], b[ctr3 % DATA_LEN]);
+            				printf("%d rs_frame[%d][%d] = %x %d \n", ctr3 + ctr1, j, i, b[ctr3 % DATA_LEN], ctr3 % DATA_LEN);
+					ctr3++;
 				}
 				
 				
