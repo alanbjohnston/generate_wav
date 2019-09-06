@@ -871,6 +871,8 @@ short int data8[8 + RS_FRAMES * (RS_FRAME_LEN + PARITY_LEN)];
 int main(int argc, char * argv[])
 {
     int reset_count;
+    float uptime_sec;
+    long int uptime;
     char call[5];
 	
     FILE* config_file = fopen("sim.cfg","r"); 
@@ -895,6 +897,12 @@ int main(int argc, char * argv[])
     fclose(config_file);
     config_file = fopen("sim.cfg","r"); 
 	
+    FILE* uptime_file = fopen("/proc/uptime", "r");
+    fscanf(uptime_file, "%f", &uptime_sec);
+    uptime = (int) uptime_sec;
+    printf("Reset Count: %d Uptime since Reset: %d \n", reset_count, uptime);
+    fclose(uptime_file);
+    return(0);
 	
 	int i;
 	//float amplitude = 32000;
@@ -928,7 +936,7 @@ int main(int argc, char * argv[])
 //    uint8_t parities[3][PARITY_LEN],inputByte;
     unsigned char parities[RS_FRAMES][PARITY_LEN],inputByte;
 // 	memset(parities,0,sizeof(parities));
-  long int uptime;
+
   int id = 5, frm_type = 0x01, TxTemp = 0, IHUcpuTemp = 0; 
   int batt_a_v = 0, batt_b_v = 0, batt_c_v = 8.95 * 100, battCurr = 48.6 * 10;
   int posXv = 296, negXv = 45, posYv = 220, negYv = 68, 
