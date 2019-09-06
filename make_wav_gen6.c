@@ -966,6 +966,7 @@ int main(int argc, char * argv[])
     fscanf(uptime_file, "%f", &uptime_sec);
     uptime = (int) uptime_sec;
     fclose(uptime_file);
+    printf("Reset Count: %d Uptime since Reset: %d \n", reset_count, uptime);
 	  
     h[0] = (h[0] & 0xf8) | (id & 0x07);  // 3 bits
     printf("h[0] %x\n", h[0]);
