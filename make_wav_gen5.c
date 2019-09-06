@@ -818,7 +818,7 @@ void write_wav(char * filename, unsigned long num_samples, short int * data, int
 
 #define S_RATE  (48000)     // (44100)
 #define BUF_SIZE (S_RATE*10) /* 2 second buffer */
-
+/*
 // BPSK Settings
 #define BIT_RATE	1200 // 200 for DUV
 #define DUV	0 // 1 for DUV
@@ -829,7 +829,7 @@ void write_wav(char * filename, unsigned long num_samples, short int * data, int
 #define SYNC_BITS 31  // 10 for DUV
 #define SYNC_WORD 0b1000111110011010010000101011101 // 0b0011111010 for DUV
 #define HEADER_LEN 8  // 6 for DUV
-/*
+*/
 // DUV Settings
 #define BIT_RATE 200 
 #define DUV	1
@@ -840,7 +840,7 @@ void write_wav(char * filename, unsigned long num_samples, short int * data, int
 #define DATA_LEN 58
 #define SYNC_BITS 10
 #define SYNC_WORD 0b0011111010
-*/
+
 
 double d_random(double min, double max)
 {
@@ -956,11 +956,12 @@ int main(int argc, char * argv[])
   h[5] = (h[5] & 0xf0) | ((uptime >> 21) & 0x0f);
   h[5] = (h[5] & 0x0f) | (frm_type << 4);  
 */  
-/*
+
   encodeA(b, 0 + head_offset, batt_a_v);
   encodeB(b, 1 + head_offset, batt_b_v);
   encodeA(b, 3 + head_offset, batt_c_v);
   encodeA(b, 9 + head_offset, battCurr);
+/*
   encodeA(b, 12 + head_offset,posXv);	
   encodeB(b, 13 + head_offset,negXv);	
   encodeA(b, 15 + head_offset,posYv);	
@@ -1342,13 +1343,13 @@ void write_to_buffer(int i, int symbol, int val)
 int encodeA(short int  *b, int index, int val) {
 //    printf("Encoding A\n");
     b[index] = (val & 0xff);
-    b[index + 1] = b[index + 1] | (val >> 8);
+    b[index + 1] = (b[index + 1] & 0xf0) | (val >> 8);
     return 0;	
 }
 
 int encodeB(short int  *b, int index, int val) {
 //    printf("Encoding B\n");
-    b[index] = b[index]  |  (val << 4);
+    b[index] = (b[index] & 0x0f)  |  (val << 4);
     b[index + 1] = b[index + 1]  |  ((val >> 4 ) & 0xff);
     return 0;	
 }
