@@ -32,11 +32,6 @@
 #define false 0
 #define true 1
 
-//static int getNextRd(int word, int flip);
-//static int getRdSense10b(int word, int flip);
-//static char decode(int word, int flip);
-//static void printAll10bwords();
-//static int encode(int word);
 static int twosToInt(int val,int len);
 static int encodeB(short int  *b, int index, int val);
 static int encodeA(short int  *b, int index, int val);
@@ -616,8 +611,6 @@ static int encodeA(short int  *b, int index, int val);
 */
 
 
-//#include "FreeRTOS.h"
-//#include "task.h"
 #include <string.h>
 //#include "Fox.h"
 //#include "TelemEncoding.h"
@@ -718,35 +711,7 @@ void update_rs(
   //taskYIELD();
 }
 
-#define SYNC  (0x0fa) // K.28.5, RD=-1
-
-
-// 8b10b encoder
-// state -> 1-bit state (0 -> RD=-1, 1 -> RD=+1), updates in place
-// data is 0-255 for user data, -1 for end of frame flag
-// Returns 10-bit channel word, right justified. Transmit this word left-to-right.
-/*int encode_8b10b(
-    int32_t *state, // pointer to encoder state (run disparity, RD)
-    int32_t data){
-
-  uint32_t w,st;
-
-  assert(state != NULL);
-  st = *state & 0x1;
-  if(data < 0){
-    // Encode end-of-frame sync. It has 6 1-bits so the RD always toggles
-    w = st ? ~SYNC : SYNC;
-    st = !st;
-  } else {
-    w = Encode_8b10b[st][data & 0xff];
-    st = (w >> 10) & 1; // Extract new RD
-  }
-  *state = st;
-  return w & 0x3ff;
-}
-*/
-
- 
+#define SYNC  (0x0fa) // K.28.5, RD=-1 
  
 void write_little_endian(unsigned int word, int num_bytes, FILE *wav_file)
 {
@@ -774,10 +739,6 @@ void write_wav(char * filename, unsigned long num_samples, short int * data, int
 	unsigned int byte_rate;
 	unsigned long i;    /* counter for samples */
 	
-//	printAll10bwords();
-	
-//	printf("Sync word: %x \n", SYNC_WORD);
- 
 	num_channels = 1;   /* monoaural */
 	bytes_per_sample = 2;
  
@@ -841,13 +802,6 @@ void write_wav(char * filename, unsigned long num_samples, short int * data, int
 #define SYNC_BITS 10
 #define SYNC_WORD 0b0011111010
 */
-/*
-double d_random(double min, double max)
-{
-    return min + (max - min) / RAND_MAX * rand();
-}
-*/
-
 
 #define PARITY_LEN 32
 
@@ -904,9 +858,6 @@ int main(int argc, char * argv[])
     fclose(uptime_file);
 	
 	int i;
-	//float amplitude = 32000;
-//	#define SYNC_LEN 4
-//	char sync[SYNC_LEN] = {0x47, 0xcd, 0x21, 0x5d};
 	long int sync = SYNC_WORD;
 
 	smaller = S_RATE/(2 * freq_Hz);
@@ -929,12 +880,8 @@ int main(int argc, char * argv[])
 	memset(h, 0, sizeof(h));
 	
 	short int b10[DATA_LEN], h10[HEADER_LEN];
-//	short int rs_frame[3][RS_FRAME_LEN];
 	short int rs_frame[RS_FRAMES][223];
-//	memset(rs_frame,0,sizeof(rs_frame));
-//    uint8_t parities[3][PARITY_LEN],inputByte;
-    unsigned char parities[RS_FRAMES][PARITY_LEN],inputByte;
-// 	memset(parities,0,sizeof(parities));
+	unsigned char parities[RS_FRAMES][PARITY_LEN],inputByte;
 
   int id = 5, frm_type = 0x01, TxTemp = 0, IHUcpuTemp = 0; 
   int batt_a_v = 0, batt_b_v = 0, batt_c_v = 8.95 * 100, battCurr = 48.6 * 10;
@@ -956,11 +903,7 @@ int main(int argc, char * argv[])
   for (int frames = 0; frames < FRAME_CNT; frames++) 
   {
     memset(rs_frame,0,sizeof(rs_frame));
- 	memset(parities,0,sizeof(parities));
-
-//	reset_count += 1;
-//    time_t time_epoch = time(NULL);
-//    uptime = time_epoch - 1567650254;
+    memset(parities,0,sizeof(parities));
 	  
     FILE *uptime_file = fopen("/proc/uptime", "r");
     fscanf(uptime_file, "%f", &uptime_sec);
@@ -1053,12 +996,6 @@ int main(int argc, char * argv[])
 		}	
 	}
      
-/*   
-   	printf("Buffer length: %d \n", BUF_LEN);
-	printf("\n\nTotal bits per frame: %d \n", BUF_LEN/(FRAME_CNT * SAMPLES));
-	printf("Frame Count: %d \n\n", FRAME_CNT);	
-*/
-	 
     int data;
     int val;
     int offset = 0;
@@ -1128,7 +1065,27 @@ int main(int argc, char * argv[])
 	return 0;
 }
 
-//package decoder;
+void write_wave(int i)
+{
+		if (DUV)
+		{
+//			if ((ctr - flip_ctr) < smaller)
+//				buffer[ctr++] = 0.1 * phase * (ctr - flip_ctr) / smaller;
+//			else
+				buffer[ctr++] = 0.25 * amplitude * phase;			
+		}
+		else
+		{
+			if ((ctr - flip_ctr) < smaller)
+  		 		buffer[ctr++] = (int)(amplitude * 0.4 * phase * 
+  		 								sin((float)(2*M_PI*i*freq_Hz/S_RATE))); 					
+ 			else
+ 		 		buffer[ctr++] = (int)(amplitude * phase * 		
+ 		 								sin((float)(2*M_PI*i*freq_Hz/S_RATE)));
+ 		 } 			
+//		printf("%d %d \n", i, buffer[ctr - 1]);
+
+}
 
 /**
  * 
@@ -1155,165 +1112,7 @@ int main(int argc, char * argv[])
  * 
  *
  */
-// class Code8b10b {
-//#include <stdio.h>
-
-void write_wave(int i)
-{
-		if (DUV)
-		{
-//			if ((ctr - flip_ctr) < smaller)
-//				buffer[ctr++] = 0.1 * phase * (ctr - flip_ctr) / smaller;
-//			else
-				buffer[ctr++] = 0.25 * amplitude * phase;			
-		}
-		else
-		{
-			if ((ctr - flip_ctr) < smaller)
-  		 		buffer[ctr++] = (int)(amplitude * 0.4 * phase * 
-  		 								sin((float)(2*M_PI*i*freq_Hz/S_RATE))); 					
- 			else
- 		 		buffer[ctr++] = (int)(amplitude * phase * 		
- 		 								sin((float)(2*M_PI*i*freq_Hz/S_RATE)));
- 		 } 			
-//		printf("%d %d \n", i, buffer[ctr - 1]);
-
-}
-/*
-void write_to_buffer(int i, int symbol, int val)
-{
-//		if ((ctr - flip_ctr) < smaller)
-//  		 buffer[ctr++] = (int)(amplitude * 0.4 * phase * 
-//  		 								sin((float)(2*M_PI*i*freq_Hz/S_RATE))); 					
-// 		else
-// 		 buffer[ctr++] = (int)(amplitude * phase * sin((float)(2*M_PI*i*freq_Hz/S_RATE))); 			
-//		if ( (i % SAMPLES) == 0) {
-//			int symbol = (int)((i - 1)/ (SAMPLES * 10));
-			int bit = 10 - (i - symbol * SAMPLES * 10) / SAMPLES + 1;	
-//			int bit = (i - symbol * SAMPLES * 10) / SAMPLES;	
-//			val = b10[symbol];
-			int data = val & 1 << (bit - 1);	
-			printf ("%d i: %d val = %x bit %d = %d \n",
-		    		 ctr/SAMPLES, i, val, bit, (data > 0) );
-			if (data == 0)  {
-				phase *= -1;
-				if ( (ctr - smaller) > 0)
-				{
-					for (int j = 1; j <= smaller; j++)
-				     	buffer[ctr - j] = buffer[ctr - j] * 0.4;
-				}
-				flip_ctr = ctr;
-			} 
-//		}
-}
-*/
-// int getNextRd(int word, int flip);
-// int getRdSense10b(int word, int flip);
-// char decode(int word, int flip);
-// void printAll10bwords();
-// int encode(int word);	 
 	
-	/**
-	 * Given a 10 bit word, look it up in the Encode_8b10b matrix and return the value
-	 * @param word - the 10 bit word
-	 * @return - the value returned 
-	 * @throws LookupException 
-	 * 
-	 */
-/*	 
-	  char decode(int word, int flip) { // throws LookupException {
-		if (flip)   {
-			 printf("%x flipped ", word);
-			 word = ~word & 0x3ff;
-			 printf("is %x \n", word);
-		}
-		for (int rd=0; rd<2; rd++)
-			for (int i=0; i<256; i++) {
-				int testValue = Encode_8b10b[rd][i];
-				if ((testValue & 0x3ff) == word) {				
-					return (char)i; // return the position in the lookup table where we found the code word
-				}
-			}
-		return 0;
-//		throw new LookupException();
-	}
-	
-	  void printAll10bwords() {
-		for (int rd=0; rd<2; rd++) {
-			printf("************* RD: %d \n", rd);
-			for (int i=0; i<256; i++) {
-				int testValue = Encode_8b10b[rd][i];
-				printf("Encode_8b10b[%x][%x]: %x ", rd, i, testValue);
-				int nextRd = getNextRd(testValue, false);
-				printf(" Next RD: %d \n", nextRd);
-				if (nextRd == -99) {
-					nextRd = getNextRd(testValue, true);
-					printf(" Flipped Next RD: %d \n", nextRd);
-				}	
-//				testValue = testValue & 0x3ff;				
-//				int[] bit10b = FoxBitStrtestValue);
-//				for (int j=0; j < bit10b.length; j++)
-//					if (bit10b[j]) printf(1 + " "); else printf(0 + " ");
-//				printf(" Next rd: %d", nextRd);
-			}
-		}
-			
-	}
-	
-	
-	 * For test purposes.  Given a chars, return the 10b encoded bits.
-	 * Always the -1 rd parity
-	 * @param word
-	 * @return
-	 */
-/*	  int encode(int word) {
-		int word10b = Encode_8b10b[0][word];
-		return word10b;
-	}
-
-	**
-	 * Returns the Running Disparity to be used for the next call to the encoder given this word
-	 * @param word
-	 * @param flip
-	 * @return
-	 */
-/*	  int getNextRd(int word, int flip) {
-		if (flip) word = ~word & 0x3ff;
-		for (int rd=0; rd<2; rd++)
-			for (int i=0; i<256; i++) {
-				int testValue = Encode_8b10b[rd][i];
-//				printf("word: %x  testValue: %x  && 0x3ff %x  == %d \n",
-//					 word, testValue, testValue & 0x3ff, (testValue & 0x3ff) == word);
-				if ((testValue & 0x3ff) == word) {				
-//				if ((testValue) == word) {				
-					int state = (testValue >> 10) & 1;
-					return state;
-				}
-			}
-		return -99; // error state - we did not find the RD sense
-		
-		
-		
-		
-	}
-	
-	**
-	 * Returns the Running Disparity (RD) used to encode the given word by finding it in the look up table
-	 * @param word
-	 * @return
-	 */
-/*	  int getRdSense10b(int word, int flip) {
-		if (flip) word = ~word & 0x3ff;
-		for (int rd=0; rd<2; rd++)
-			for (int i=0; i<256; i++) {
-				int testValue = Encode_8b10b[rd][i];
-				if ((testValue & 0x3ff) == word) {				
-					return rd;
-				}
-			}
-		return -99; // error state - we did not find the RD sense
-	}
-*/	
 int encodeA(short int  *b, int index, int val) {
 //    printf("Encoding A\n");
     b[index] = val & 0xff;
