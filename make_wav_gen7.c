@@ -1317,13 +1317,13 @@ void write_to_buffer(int i, int symbol, int val)
 int encodeA(short int  *b, int index, int val) {
 //    printf("Encoding A\n");
     b[index] = val & 0xff;
-    b[index + 1] = (b[index + 1] & 0xf0) | (val >> 8);
+    b[index + 1] = (b[index + 1] & 0xf0) | ((val >> 8) & 0x0f);
     return 0;	
 }
 
 int encodeB(short int  *b, int index, int val) {
 //    printf("Encoding B\n");
-    b[index] = (b[index] & 0x0f)  |  (val << 4);
+    b[index] = (b[index] & 0x0f)  |  ((val << 4) & 0xf0);
     b[index + 1] = (val >> 4 ) & 0xff;
     return 0;	
 }
