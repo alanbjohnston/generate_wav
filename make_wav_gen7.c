@@ -1123,7 +1123,7 @@ int main(int argc, char * argv[])
 		}
 	 }   
 	}
-	write_wav("make_wav_gen6.wav", BUF_LEN, buffer, S_RATE);
+	write_wav("make_wav_gen7.wav", BUF_LEN, buffer, S_RATE);
  
 	return 0;
 }
