@@ -950,9 +950,9 @@ int main(int argc, char * argv[])
   encodeB(b, 13 + head_offset,posYv);	
   encodeA(b, 15 + head_offset,posZv);	
   encodeB(b, 16 + head_offset,negXv);	
-/*  encodeA(b, 18 + head_offset,negYv);	
+  encodeA(b, 18 + head_offset,negYv);	
   encodeB(b, 19 + head_offset,negZv);		
-*/
+
   for (int frames = 0; frames < FRAME_CNT; frames++) 
   {
     memset(rs_frame,0,sizeof(rs_frame));
